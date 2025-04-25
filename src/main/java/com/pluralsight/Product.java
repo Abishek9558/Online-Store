@@ -30,9 +30,10 @@ public class Product {
     }
 
     public String toString() {
-        return sku + "|" + name + "| $" + String.format("%2f" , price) + "|" + department;
+        return sku + " | " + name + " | $" + String.format("%.2f", price) + " | " + department;
     }
-}
+    }
+
 
 
 

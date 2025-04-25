@@ -2,13 +2,14 @@ package com.pluralsight;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Scanner;
 
 
-public class App {
+public class OnlineStoreApp {
     public static void main(String[] args) {
-        HashMap<Integer, Product> products = getProduct();
+        HashMap<Integer, Product> products = new HashMap<>();
 
         Scanner keyboard = new Scanner(System.in);
         System.out.println("---Welcome to the Inventory Management System---\n");
@@ -39,21 +40,26 @@ public class App {
         }
     }
 
-    public static HashMap<Integer, Product> getProduct() {
-        HashMap<Integer, Product> product = new HashMap<>();
+    public static ArrayList<Product> getProduct() {
+        ArrayList<Product> product = new ArrayList<Product>();
 
         try (BufferedReader br = new BufferedReader(new FileReader("src/main/resources/products.csv"))) {
+            br.readLine();
             String file;
             while ((file = br.readLine()) != null) {
                 String[] parts = file.split("\\|");
 
+                String sku = parts[0];
+                String name = parts[1];
                 double price = Double.parseDouble(parts[2]);
+                String department = parts[3];
 
+                product.add(new Product(sku, name, price, department));
             }
+
         } catch (IOException e) {
             System.out.println("Error reading file: " + e.getMessage());
         }
-
         return product;
     }
 }
